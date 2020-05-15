@@ -115,6 +115,7 @@
         }).then(() => {
           axios.get(api+'book/deleteById',{params:{id:row.id}}).then(function (resp) {
             if (resp.data=="success"){
+              ///////////
               _this.$message.success("删除成功");
             }
           })

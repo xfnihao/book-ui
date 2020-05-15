@@ -59,7 +59,7 @@
                 _this.$message.success("添加成功");
                  _this.ruleForm.title='',
                   _this.ruleForm.author=''
-                  // _this.ruleForm.submission=''
+
               }
             });
           } else {
