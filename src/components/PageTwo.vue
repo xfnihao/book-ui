@@ -21,9 +21,8 @@
       </el-form>
     </div>
 </template>
-
 <script>
-
+  var api="http://localhost:8081/";
   import  axios from 'axios'
   export default {
     data() {
@@ -48,12 +47,21 @@
     },
     methods: {
       submitForm(formName) {
+        var _this=this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
-
-            console.log(this.ruleForm);
-            this.$message.success('添加成功');
-            this.$router.push('/pageOne');
+            axios.post(api+'book/save',{
+              title:_this.ruleForm.title,
+              author:_this.ruleForm.author,
+              submission:_this.ruleForm.submission
+            }).then(function (resp) {
+              if (resp.data=="success"){
+                _this.$message.success("添加成功");
+                 _this.ruleForm.title='',
+                  _this.ruleForm.author=''
+                  // _this.ruleForm.submission=''
+              }
+            });
           } else {
             return false;
           }

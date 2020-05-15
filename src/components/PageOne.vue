@@ -65,16 +65,19 @@
   </el-pagination>
   </div>
 </template>
-<script src="../router/url.js"></script>
+
 <script>
+  var api="http://localhost:8081/";
 
   import  axios from 'axios'
   export default {
     data() {
       return {
         ruleForm: {
+          id:'',
           title: '',
           author: '',
+          submission:''
         },
         rules: {
           title: [
@@ -103,35 +106,49 @@
     },
     methods: {
       deleteRecord(row) {
+
+        var _this=this;
         this.$confirm('确定删除该记录?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功'
-          });
+          axios.get(api+'book/deleteById',{params:{id:row.id}}).then(function (resp) {
+            if (resp.data=="success"){
+              _this.$message.success("删除成功");
+            }
+          })
+          window.location.reload();
         }).catch(() => {
-          // this.$message({
-          //   type: 'info',
-          //   message: '已取消删除'
-          // });
         });
       },
       open(row) {
+        var _this=this;
         //获取后台返回的数据
-        // axios.get('url/').then(function (resp) {
-        //   //渲染
-        // this.ruleForm=resp.data;
-        // })
-        this.dialogFormVisible=true;
+        axios.get(api+'book/query',{params:{
+          id:row.id
+          }}).then(function (resp) {
+          //渲染
+          _this.ruleForm=resp.data;
+          _this.dialogFormVisible=true;
+        })
+
       },
       update(){
-        console.log("update");
-        this.$message.success('修改成功');
-        this.dialogFormVisible=false;
+        var _this=this;
+        axios.post(api+'/book/update',{
+          id:this.ruleForm.id,
+          title:_this.ruleForm.title,
+          author:_this.ruleForm.author,
+          submission:_this.ruleForm.submission
+        }).then(function (resp) {
+          if (resp.data=="success"){
+            _this.$message.success('修改成功');
 
+          }
+        })
+        this.dialogFormVisible=false;
+        window.location.reload();
       },
       page(page){
         var _this=this;
@@ -143,8 +160,6 @@
     created(){
       var _this=this;
       axios.get(api+'book/list',{params:{page:1,limit:6}}).then(function (resp) {
-
-
         _this.tableData=resp.data.list;
         _this.total=resp.data.total;
       })
