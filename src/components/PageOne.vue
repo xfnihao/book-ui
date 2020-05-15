@@ -25,6 +25,12 @@
       width="200">
     </el-table-column>
     <el-table-column
+      prop="submission"
+      align="center"
+      label="时间"
+      width="250">
+    </el-table-column>
+    <el-table-column
       label="操作"
       align="center"
       width="200">
@@ -59,8 +65,9 @@
   </el-pagination>
   </div>
 </template>
-
+<script src="../router/url.js"></script>
 <script>
+
   import  axios from 'axios'
   export default {
     data() {
@@ -128,17 +135,18 @@
       },
       page(page){
         var _this=this;
-        axios.get('http://localhost:8081/book/list/'+page+'/6').then(function (resp) {
-          _this.tableData=resp.data.content;
+        axios.get(api+'book/list',{params:{page:page,limit:6}}).then(function (resp) {
+          _this.tableData=resp.data.list;
         })
       }
     },
     created(){
       var _this=this;
-      axios.get('http://localhost:8081/book/list/1/6').then(function (resp) {
+      axios.get(api+'book/list',{params:{page:1,limit:6}}).then(function (resp) {
 
-        _this.tableData=resp.data.content;
-        _this.total=resp.data.totalElements;
+
+        _this.tableData=resp.data.list;
+        _this.total=resp.data.total;
       })
     }
 
