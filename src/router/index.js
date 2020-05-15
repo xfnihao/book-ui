@@ -30,31 +30,6 @@ export default new Router({
         },
 
       ]
-    },
-    {
-      path: '/nav',
-      name: '导航2',
-      component: Index,
-      children:[
-        {
-          path:'/pageThree',
-          name:'three',
-          component:PageThree
-        },
-        {
-          path:'/pageFour',
-          name:'four',
-          component:PageFour
-        },
-      ]
     }
-    // {
-    //   path: '/book',
-    //   name: 'Book',
-    //   component: Book
-    // },
-
-
-
   ]
 })
