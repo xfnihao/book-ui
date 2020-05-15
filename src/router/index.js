@@ -4,8 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Book from '@/components/Book'
 import PageOne from '@/components/PageOne'
 import PageTwo from '@/components/PageTwo'
-import PageThree from '@/components/PageThree'
-import PageFour from '@/components/PageFour'
+
 import Index from '@/components/Index'
 Vue.use(Router)
 
